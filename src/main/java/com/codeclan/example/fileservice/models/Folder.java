@@ -19,10 +19,15 @@ public class Folder {
     @JsonIgnoreProperties("folder")
     @OneToMany(mappedBy = "folder")
     private List<File> files;
+    @JsonIgnoreProperties(value = "folders")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public Folder(String title){
+    public Folder(String title, User user){
         this.title = title;
         this.files = new ArrayList<File>();
+        this.user = user;
     }
 
     public Folder(){

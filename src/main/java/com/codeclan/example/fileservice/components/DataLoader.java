@@ -2,8 +2,10 @@ package com.codeclan.example.fileservice.components;
 
 import com.codeclan.example.fileservice.models.File;
 import com.codeclan.example.fileservice.models.Folder;
+import com.codeclan.example.fileservice.models.User;
 import com.codeclan.example.fileservice.repositories.FileRepository;
 import com.codeclan.example.fileservice.repositories.FolderRepository;
+import com.codeclan.example.fileservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,14 +20,19 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     FolderRepository folderRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     public DataLoader(){
 
     }
 
     public void run(ApplicationArguments args){
-        Folder photos = new Folder("Photos");
+        User dave = new User("Dave");
+        userRepository.save(dave);
+        Folder photos = new Folder("Photos", dave);
         folderRepository.save(photos);
-        Folder music = new Folder("Music");
+        Folder music = new Folder("Music", dave);
         folderRepository.save(music);
         File family = new File("Family Portrait", ".jpeg", 3.46, photos);
         fileRepository.save(family);
